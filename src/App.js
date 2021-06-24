@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Main from "./components/Main";
 import config from "./config";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Test from "./components/Test";
 
 const { API_URL } = config[process.env.NODE_ENV];
 
@@ -24,6 +26,25 @@ const Root = styled.div`
 `;
 
 const App = () => {
+  return (
+    <Root>
+      <Router>
+        <div>
+          <Switch>
+            <Route path="/test/:testId">
+              <Test />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </Root>
+  );
+};
+
+const Home = () => {
   const [abTests, setAbTests] = useState([]);
   const [max, setMax] = useState([]);
 
@@ -42,14 +63,13 @@ const App = () => {
       fetchAbTests();
     }
   }, [abTests]);
-
   return (
-    <Root>
+    <>
       <Header>
         <h1>Simple A/B Test</h1>
       </Header>
       <Main tests={abTests} max={max} />
-    </Root>
+    </>
   );
 };
 

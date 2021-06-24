@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Progress from "./Progress";
-
+import { Link } from "react-router-dom";
 const Root = styled.div`
   display: flex;
   flex-direction: column;
@@ -13,21 +13,19 @@ const AbTest = ({
   title,
   hypothesis,
   uuid,
-  start,
-  end,
-  max,
   percentage,
   active,
-  archived,
-  created_at,
   updated_at,
 }) => {
   return (
     <Root>
-      <h3>{title}</h3>
+      <Progress width={percentage} />
+      ID: <pre>{uuid}</pre>
+      <h2>{title}</h2>
       <p>{hypothesis}</p>
       Active: {active}
-      <Progress width={percentage} />
+      <Link to={"test/" + uuid}>edit</Link>
+      <p>last edited: {new Date(updated_at).toDateString()}</p>
     </Root>
   );
 };

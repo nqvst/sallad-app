@@ -18,6 +18,7 @@ const ProgressInside = styled.div`
   flex-direction: row;
   background-color: green;
   position: relative;
+  transition: width 200ms ease-in-out;
 `;
 
 const ProgressText = styled.span`
