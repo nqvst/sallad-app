@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+import Main from "./Main";
+import config from "./config";
 
-function App() {
+const { API_URL } = config[process.env.NODE_ENV];
+
+const Header = styled.header`
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+`;
+
+const Root = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+`;
+
+const App = () => {
+  const [abTests, setAbTests] = useState([]);
+
+  useEffect(() => {
+    const fetchAbTests = async () => {
+      try {
+        const res = await fetch(`${API_URL}/tests/all`);
+        const tests = await res.json();
+        setAbTests(tests);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    if (!abTests.length) {
+      fetchAbTests();
+    }
+  }, [abTests]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Root>
+      <Header>
+        <h1>Simple A/B Test</h1>
+      </Header>
+      <Main tests={abTests} />
+    </Root>
   );
-}
+};
 
 export default App;
