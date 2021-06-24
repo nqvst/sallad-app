@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Main from "./Main";
+import Main from "./components/Main";
 import config from "./config";
 
 const { API_URL } = config[process.env.NODE_ENV];
@@ -25,13 +25,15 @@ const Root = styled.div`
 
 const App = () => {
   const [abTests, setAbTests] = useState([]);
+  const [max, setMax] = useState([]);
 
   useEffect(() => {
     const fetchAbTests = async () => {
       try {
         const res = await fetch(`${API_URL}/tests/all`);
         const tests = await res.json();
-        setAbTests(tests);
+        setAbTests(tests.tests);
+        setMax(tests.max);
       } catch (e) {
         console.error(e);
       }
@@ -46,7 +48,7 @@ const App = () => {
       <Header>
         <h1>Simple A/B Test</h1>
       </Header>
-      <Main tests={abTests} />
+      <Main tests={abTests} max={max} />
     </Root>
   );
 };

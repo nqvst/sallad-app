@@ -17,15 +17,15 @@ const StyledListItem = styled.li`
   margin: 20px;
 `;
 
-const Main = ({ tests }) => {
+const Main = ({ tests, max }) => {
   return (
     <Root>
       <ul>
-        {tests.length != 0 &&
+        {tests.length !== 0 &&
           tests.map((t) => {
             return (
               <StyledListItem key={t.uuid}>
-                <AbTest {...t} />
+                <AbTest {...t} max={max} />
               </StyledListItem>
             );
           })}

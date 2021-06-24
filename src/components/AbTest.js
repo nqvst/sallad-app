@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Progress from "./Progress";
 
 const Root = styled.div`
   display: flex;
@@ -12,6 +13,10 @@ const AbTest = ({
   title,
   hypothesis,
   uuid,
+  start,
+  end,
+  max,
+  percentage,
   active,
   archived,
   created_at,
@@ -21,7 +26,8 @@ const AbTest = ({
     <Root>
       <h3>{title}</h3>
       <p>{hypothesis}</p>
-      Active <input type="checkbox" />
+      Active: {active}
+      <Progress width={percentage} />
     </Root>
   );
 };
